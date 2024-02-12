@@ -1,5 +1,6 @@
 {
   "name": "test-react-app",
+  "homepage": "https://syntaxframe.github.io/test-react-app/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
