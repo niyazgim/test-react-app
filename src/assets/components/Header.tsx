@@ -5,18 +5,18 @@ export default function Header() {
     <header className="py-5">
       <nav className="md:container m-auto flex items-center justify-between">
         <div className="flex gap-7 items-end">
-          <img src="/test-react-app/logo/logo.svg" alt="logotype" className="h-10" />
+          <img src="/logo/logo.svg" alt="logotype" className="h-10" />
           <div className="flex gap-3 items-end">
             <ul className="w-fit flex gap-3 pl-3 border-l-2 border-gray-300">
-              <Link to="/">
+              <Link to="/test-react-app">
                 Главная
               </Link>
-              <Link to="/catalog">
+              <Link to="/test-react-app/catalog">
                 Каталог
               </Link>
             </ul>
             <ul className="w-fit flex gap-3 pl-3 border-l-2 border-gray-300">
-              <Link to="/about">
+              <Link to="/test-react-app/about">
                 Информация
               </Link>
             </ul>
