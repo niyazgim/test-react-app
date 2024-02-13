@@ -4,11 +4,11 @@ import Home from "./assets/pages/Home"
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: '/test-react-app/',
     element: <GuestLayout />,
     children: [
       {
-        path: '/',
+        path: '/test-react-app/',
         element: <Home />,
       },
       // {
