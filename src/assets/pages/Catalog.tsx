@@ -1,5 +1,3 @@
-// import { Link } from "react-router-dom";
-
 import {Categories, CategoriesWrapper} from "../components/CategoriesWrapper";
 import ProductCard from "../components/ProductCard";
 

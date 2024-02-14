@@ -3,17 +3,17 @@ import { Links, NavLinks } from "./NavLinks";
 
 export default function Header() {
   const linksData1: Links = {
-    "/": "Главная",
-    "/catalog": "Каталог",
+    "/test-react-app/": "Главная",
+    "/test-react-app/catalog": "Каталог",
   };
   const linksData2: Links = {
-    "/about": "О нас",
+    "/test-react-app/about": "О нас",
   };
   return (
     <header className="py-5">
       <nav className="md:container m-auto flex items-center justify-between">
         <div className="flex gap-7 items-end">
-          <img src="/logo/logo.svg" alt="logotype" className="h-10" />
+          <img src="/test-react-app/logo/logo.svg" alt="logotype" className="h-10" />
           <div className="flex gap-3 items-end">
             <NavLinks links={linksData1} />
             <NavLinks links={linksData2} />
