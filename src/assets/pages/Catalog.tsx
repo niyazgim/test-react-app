@@ -1,30 +1,22 @@
 // import { Link } from "react-router-dom";
 
+import {Categories, CategoriesWrapper} from "../components/CategoriesWrapper";
+import ProductCard from "../components/ProductCard";
+
 export default function Catalog() {
+  const categoriesData: Categories = {
+    1: "Топ",
+    2: "Низ",
+    3: "Обувь",
+  };
   return (
-    <section className="pt-5">
-      <div className="flex items-center gap-3 justify-center">
-        <button className="px-5 py-2 border border-gray-600">
-          Все
-        </button>
-        <button className="px-5 py-2 border border-gray-600">
-          Топ
-        </button>
-        <button className="px-5 py-2 border border-gray-600">
-          Низ
-        </button>
-        <button className="px-5 py-2 border border-gray-600">
-          Обувь
-        </button>
-      </div>
-      <div className="grid-cols-3 mt-6">
-        <article>
-          <img src="" alt="" />
-          <h3>Рубашка СВЭГ</h3>
-          <div>
-            <p>9999 ₽</p>
-          </div>
-        </article>
+    <section className="md:container m-auto pt-5">
+      <CategoriesWrapper categories={categoriesData} />
+      <div className="grid grid-cols-4 gap-x-10 mt-12">
+        <ProductCard imageUrl={"shirt1.png"} name={"test"} price={12345} />
+        <ProductCard imageUrl={"shirt1.png"} name={"test"} price={12345} />
+        <ProductCard imageUrl={"shirt1.png"} name={"test"} price={12345} />
+        <ProductCard imageUrl={"shirt.png"} name={"test"} price={12345} />
       </div>
     </section>
   )
