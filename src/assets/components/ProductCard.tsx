@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const ProductCard = ({ id, imageUrl, name, price }: ProductType): JSX.Element => {
   return (
     <article className="w-full">
-      <Link to={"catalog/" + id}>
+      <Link to={"/catalog/" + id}>
         <ProductImage imageUrl={"/products/" + imageUrl} altText={name} />
       </Link>
       <h3 className="mt-4 text-sm">{name}</h3>
