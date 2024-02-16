@@ -1,13 +1,11 @@
-# .github/workflows/deploy.yml
+# Simplified workflow for deploying static content to GitHub Pages
 name: Deploy static content to Pages
 
 on:
   push:
-    branches: ['main']
+    branches:
+      - master
   workflow_dispatch:
-  
-env:
-  GITHUB_REPOSITORY: ${{ github.repository }}
 
 jobs:
   deploy:
@@ -18,18 +16,14 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: '18'
           cache: 'npm'
       - name: Install dependencies
         run: npm install
       - name: Build
         run: npm run build
-        env:
-          BASE_URL: ${{ secrets.BASE_URL }}
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: actions/setup-node@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
-          user_pages: false
-          cname: your-custom-domain.com  # Optional custom domain setting
