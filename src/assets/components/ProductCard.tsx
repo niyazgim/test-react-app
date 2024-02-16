@@ -9,7 +9,7 @@ interface Props {
 const ProductCard = ({ imageUrl, name, price }: Props): JSX.Element => {
   return (
     <article className="w-full">
-      <ProductImage imageUrl={"/test-react-app/products/" + imageUrl} altText={name} />
+      <ProductImage imageUrl={"/products/" + imageUrl} altText={name} />
       <h3 className="mt-4 text-sm">{name}</h3>
       <div className="mt-1 flex justify-between items-center">
         <p className="text-xl">{price} ₽</p>

@@ -1,19 +1,19 @@
-import Btn from "./Btn";
-import { Links, NavLinks } from "./NavLinks";
+import Btn from "../components/Btn";
+import { Links, NavLinks } from "../components/NavLinks";
 
 export default function Header() {
   const linksData1: Links = {
-    "/test-react-app/": "Главная",
-    "/test-react-app/catalog": "Каталог",
+    "/": "Главная",
+    "/catalog": "Каталог",
   };
   const linksData2: Links = {
-    "/test-react-app/about": "О нас",
+    "/about": "О нас",
   };
   return (
     <header className="py-5">
       <nav className="md:container m-auto flex items-center justify-between">
         <div className="flex gap-7 items-end">
-          <img src="/test-react-app/logo/logo.svg" alt="logotype" className="h-10" />
+          <img src="/logo/logo.svg" alt="logotype" className="h-10" />
           <div className="flex gap-3 items-end">
             <NavLinks links={linksData1} />
             <NavLinks links={linksData2} />

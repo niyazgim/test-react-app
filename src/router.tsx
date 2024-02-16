@@ -5,15 +5,15 @@ import Catalog from "./assets/pages/Catalog";
 
 const router = createBrowserRouter([
   {
-    path: '/test-react-app',
+    path: '/',
     element: <GuestLayout />,
     children: [
       {
-        path: '/test-react-app',
+        path: '/',
         element: <Home />,
       },
       {
-        path: '/test-react-app/catalog',
+        path: '/catalog',
         element: <Catalog />,
       },
       // {
