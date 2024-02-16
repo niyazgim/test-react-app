@@ -1,24 +1,17 @@
-export type Categories = {
-  [id: number]: string;
+import { CategoryType, PropsType } from "../../types";
+
+export function CategoryBtn({ id, name } : CategoryType): JSX.Element {
+  return (
+    <button data-id={id} className="px-5 py-2 border border-gray-600">
+      {name}
+    </button>
+  );
 }
-const CategoriesWrapper = ({ categories }: { categories: Categories }): JSX.Element => {
-  
-  const CategoryBtn = ({ id, name }: { id: number; name: string }): JSX.Element => {
-    return (
-      <button data-id={id} className="px-5 py-2 border border-gray-600">
-        {name}
-      </button>
-    );
-  };
-  
+
+export function CategoriesWrapper( { children }: PropsType): JSX.Element {
   return (
     <div className="flex items-center gap-3 justify-center">
-      <CategoryBtn id={0} name={"Все"} />
-      {Object.entries(categories).map(([id, name]) => (
-        <CategoryBtn key={id} id={parseInt(id)} name={name} />
-      ))}
+      {children}
     </div>
-  );
-};
-
-export {CategoriesWrapper};
+  )
+}

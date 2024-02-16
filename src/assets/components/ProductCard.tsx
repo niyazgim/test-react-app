@@ -1,15 +1,14 @@
 import Btn from "./Btn";
 import ProductImage from "./ProductImage";
+import { ProductType } from "../../types";
+import { Link } from "react-router-dom";
 
-interface Props {
-  imageUrl: string | null;
-  name: string | "image";
-  price: number | 0;
-}
-const ProductCard = ({ imageUrl, name, price }: Props): JSX.Element => {
+const ProductCard = ({ id, imageUrl, name, price }: ProductType): JSX.Element => {
   return (
     <article className="w-full">
-      <ProductImage imageUrl={"/products/" + imageUrl} altText={name} />
+      <Link to={"catalog/" + id}>
+        <ProductImage imageUrl={"/products/" + imageUrl} altText={name} />
+      </Link>
       <h3 className="mt-4 text-sm">{name}</h3>
       <div className="mt-1 flex justify-between items-center">
         <p className="text-xl">{price} ₽</p>
