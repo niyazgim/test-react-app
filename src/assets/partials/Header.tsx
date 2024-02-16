@@ -1,22 +1,24 @@
 import Btn from "../components/Btn";
-import { Links, NavLinks } from "../components/NavLinks";
+import { NavLinks } from "../components/NavLinks";
+import { LinksType } from "../../types";
+import { Link } from "react-router-dom";
 
 export default function Header() {
-  const linksData1: Links = {
-    "/": "Главная",
-    "/catalog": "Каталог",
-  };
-  const linksData2: Links = {
-    "/about": "О нас",
-  };
+  const linksData1: LinksType[] = [
+    { url: "/", name: "Главная", },
+    { url: "/catalog", name: "Каталог", },
+  ]
+  const linksData2: LinksType[] = [
+    { url: "/about", name: "О нас" },
+  ]
   return (
     <header className="py-5">
       <nav className="md:container m-auto flex items-center justify-between">
         <div className="flex gap-7 items-end">
           <img src="/logo/logo.svg" alt="logotype" className="h-10" />
           <div className="flex gap-3 items-end">
-            <NavLinks links={linksData1} />
-            <NavLinks links={linksData2} />
+            <NavLinks> {linksData1.map((link) => { return (<Link to={link.url}>{link.name}</Link>) })} </NavLinks>
+            <NavLinks> {linksData2.map((link) => { return (<Link to={link.url}>{link.name}</Link>) })} </NavLinks>
           </div>
         </div>
         <div className="flex gap-3 items-end">

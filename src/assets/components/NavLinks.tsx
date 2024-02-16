@@ -1,21 +1,9 @@
-import { Link } from "react-router-dom";
-import { LinksType } from "../../types"
+import { PropsType } from "../../types"
 
-const NavLinks = ({ links }: { links: LinksType }): JSX.Element => {
-
-  const NavLink = ({ url, name }: { url: string; name: string }): JSX.Element => {
-    return (
-      <Link to={url}>{name}</Link>
-    );
-  };
-
+export function NavLinks({ children }: PropsType): JSX.Element {
   return (
     <ul className="w-fit flex gap-3 pl-3 border-l-2 border-gray-300">
-      {Object.entries(links).map(([url, name]) => (
-        <NavLink key={url} url={url} name={name} />
-      ))}
+      {children}
     </ul>
-  );
-};
-
-export { NavLinks };
+  )
+}
