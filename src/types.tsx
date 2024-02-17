@@ -5,6 +5,7 @@ export type ProductType = {
   imageUrl: string | null,
   name: string | "image",
   price: number | 0,
+  category_id?: number | 0,
 }
 
 export type LinksType = {
@@ -13,7 +14,7 @@ export type LinksType = {
 }
 
 export type CategoryType = {
-  id: number,
+  id: number | null,
   name: string | "",
 }
 

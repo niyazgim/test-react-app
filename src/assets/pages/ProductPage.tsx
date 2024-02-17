@@ -1,5 +1,5 @@
-import Btn from "./Btn";
-import ProductImage from "./ProductImage";
+import Btn from "../components/Btn";
+import ProductImage from "../components/ProductImage";
 
 import { productsData } from "../data/products";
 import { Link, useParams } from "react-router-dom";

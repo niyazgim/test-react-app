@@ -2,7 +2,8 @@ import { createBrowserRouter } from "react-router-dom";
 import GuestLayout from "./assets/layouts/GuestLayout";
 import Home from "./assets/pages/Home"
 import Catalog from "./assets/pages/Catalog";
-import ProductPage from "./assets/components/ProductPage";
+import ProductPage from "./assets/pages/ProductPage";
+import SearchPage from "./assets/pages/SearchPage";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: '/catalog/:id',
         element: <ProductPage />,
+      },
+      {
+        path: '/search',
+        element: <SearchPage />,
       },
       // {
       //   path: '/login',

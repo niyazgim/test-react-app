@@ -3,7 +3,7 @@ import { PropsType } from "../../types"
 
 const Btn = ({ children }: PropsType): JSX.Element => {
   return (
-    <button className="flex justify-center items-center">
+    <button className="h-8 p-1 flex justify-center items-center">
       {children}
     </button>
   )
