@@ -28,7 +28,6 @@ input[type="search"]::-webkit-search-results-decoration {
   background: linear-gradient(270.11deg, rgba(0, 0, 0, 0.54) 2.13%, #121212 21.89%, #121212 78.91%, rgba(0, 0, 0, 0.46) 91.94%);
 }
 
-
 .lds-ring {
   display: inline-block;
   position: relative;

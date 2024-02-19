@@ -1,10 +1,14 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useAnimate } from "framer-motion";
+import { ProductSuggestionsCard } from "./ProductCard";
+import { productsData } from "../data/products";
+import { ProductType } from "../../types";
 
 export default function SearchBar() {
-  const [isOpen, setOpen] = useState(false)
+  const [isOpen, setOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [suggestions, setSuggestions] = useState<ProductType[]>([]);
   const navigate = useNavigate();
   const [scope, animate] = useAnimate();
 
@@ -42,7 +46,7 @@ export default function SearchBar() {
       isOpen ? document.getElementById('search')?.focus() : hanleOpening();
     };
     const handleSearchShortcut = () => {
-      if (isOpen) handleSearch();
+      if (isOpen) handleSearchClick();
     };
     window.addEventListener('keydown', handleKeyPress);
 
@@ -51,19 +55,35 @@ export default function SearchBar() {
     };
   });
 
-  const handleSearch = () => {
+  const handleSearchClick = () => {
     navigate(`/search?q=${searchQuery}`)
   };
 
+  const handleSearchType = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const searchQuery = event?.target.value;
+    setSearchQuery(searchQuery);
+    setSuggestions([]);
+    if(searchQuery.length > 0) {
+      const productsDataFiltered: ProductType[] = productsData.filter(item =>
+        item.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setSuggestions(productsDataFiltered);
+    }
+  }
   return (
-    <div className="h-8 flex relative gap-3">
-      <div ref={scope} id="searchContainer" className={`${isOpen ? `flex` : `hidden`} items-center gap-1 border rounded border-gray-800 focus-within:border-gray-600 `}>
-        <input onChange={(event) => { setSearchQuery(event?.target.value) }} id="search" type="search" className="w-full pl-2 bg-transparent focus-visible:outline-none" />
-        <button onClick={handleSearch} className={`h-4 ${isOpen ? `flex` : `hidden`}  justify-center items-center m-2`}>
-          <svg className="h-full" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M19.6 21L13.3 14.7C12.8 15.1 12.225 15.4167 11.575 15.65C10.925 15.8833 10.2333 16 9.5 16C7.68333 16 6.14583 15.3708 4.8875 14.1125C3.62917 12.8542 3 11.3167 3 9.5C3 7.68333 3.62917 6.14583 4.8875 4.8875C6.14583 3.62917 7.68333 3 9.5 3C11.3167 3 12.8542 3.62917 14.1125 4.8875C15.3708 6.14583 16 7.68333 16 9.5C16 10.2333 15.8833 10.925 15.65 11.575C15.4167 12.225 15.1 12.8 14.7 13.3L21 19.6L19.6 21ZM9.5 14C10.75 14 11.8125 13.5625 12.6875 12.6875C13.5625 11.8125 14 10.75 14 9.5C14 8.25 13.5625 7.1875 12.6875 6.3125C11.8125 5.4375 10.75 5 9.5 5C8.25 5 7.1875 5.4375 6.3125 6.3125C5.4375 7.1875 5 8.25 5 9.5C5 10.75 5.4375 11.8125 6.3125 12.6875C7.1875 13.5625 8.25 14 9.5 14Z" fill="#F0F0F0" />
-          </svg>
-        </button>
+    <div className="h-8 flex gap-3">
+      <div className="relative">
+        <div ref={scope} id="searchContainer" className={`${isOpen ? `flex` : `hidden`} items-center gap-1 border rounded border-gray-800 focus-within:border-gray-600 `}>
+          <input onChange={handleSearchType} id="search" type="search" className="w-full pl-2 bg-transparent focus-visible:outline-none" />
+          <button onClick={handleSearchClick} className={`h-4 ${isOpen ? `flex` : `hidden`}  justify-center items-center m-2`}>
+            <svg className="h-full" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19.6 21L13.3 14.7C12.8 15.1 12.225 15.4167 11.575 15.65C10.925 15.8833 10.2333 16 9.5 16C7.68333 16 6.14583 15.3708 4.8875 14.1125C3.62917 12.8542 3 11.3167 3 9.5C3 7.68333 3.62917 6.14583 4.8875 4.8875C6.14583 3.62917 7.68333 3 9.5 3C11.3167 3 12.8542 3.62917 14.1125 4.8875C15.3708 6.14583 16 7.68333 16 9.5C16 10.2333 15.8833 10.925 15.65 11.575C15.4167 12.225 15.1 12.8 14.7 13.3L21 19.6L19.6 21ZM9.5 14C10.75 14 11.8125 13.5625 12.6875 12.6875C13.5625 11.8125 14 10.75 14 9.5C14 8.25 13.5625 7.1875 12.6875 6.3125C11.8125 5.4375 10.75 5 9.5 5C8.25 5 7.1875 5.4375 6.3125 6.3125C5.4375 7.1875 5 8.25 5 9.5C5 10.75 5.4375 11.8125 6.3125 12.6875C7.1875 13.5625 8.25 14 9.5 14Z" fill="#F0F0F0" />
+            </svg>
+          </button>
+        </div>
+        <div className={`${isOpen ? `block` : `hidden`} absolute top-12 left-0 bg-gray-900 rounded w-full`}>
+          {suggestions.map((product) => { return (<ProductSuggestionsCard id={product.id} imageUrl={product.imageUrl} name={product.name} price={product.price} />) })}
+        </div>
       </div>
       <button onClick={hanleOpening} className="h-8 p-1 flex justify-center items-center">
         <svg className="h-full" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
