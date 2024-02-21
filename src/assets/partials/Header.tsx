@@ -12,6 +12,9 @@ export default function Header() {
   const linksData2: LinksType[] = [
     { url: "/about", name: "О нас" },
   ]
+  const linksData3: LinksType[] = [
+    { url: "/users", name: "Пользователи" },
+  ]
   return (
     <header className="py-5">
       <nav className="md:container m-auto flex items-center justify-between">
@@ -20,6 +23,7 @@ export default function Header() {
           <div className="flex gap-3 items-end">
             <NavLinks> {linksData1.map((link) => { return (<Link to={link.url}>{link.name}</Link>) })} </NavLinks>
             <NavLinks> {linksData2.map((link) => { return (<Link to={link.url}>{link.name}</Link>) })} </NavLinks>
+            <NavLinks> {linksData3.map((link) => { return (<Link to={link.url}>{link.name}</Link>) })} </NavLinks>
           </div>
         </div>
         <div className="flex gap-3 items-center">

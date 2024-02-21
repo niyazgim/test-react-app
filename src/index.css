@@ -31,8 +31,8 @@ input[type="search"]::-webkit-search-results-decoration {
 .lds-ring {
   display: inline-block;
   position: relative;
-  width: 80px;
-  height: 80px;
+  width: 25% !important;
+  height: 25% !important;
 }
 .lds-ring div {
   box-sizing: border-box;

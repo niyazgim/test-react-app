@@ -3,6 +3,7 @@ import GuestLayout from "./assets/layouts/GuestLayout";
 import Home from "./assets/pages/Home"
 import Catalog from "./assets/pages/Catalog";
 import ProductPage from "./assets/pages/ProductPage";
+import UsersList from "./assets/pages/UsersList";
 import SearchPage from "./assets/pages/SearchPage";
 
 const router = createBrowserRouter([
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
       {
         path: '/search',
         element: <SearchPage />,
+      },
+      {
+        path: '/users',
+        element: <UsersList />,
       },
       // {
       //   path: '/login',
