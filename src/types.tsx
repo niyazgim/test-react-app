@@ -11,8 +11,12 @@ export type ProductType = {
 export type UserType = {
   id: number | 0,
   imageUrl: string | null,
-  name: string | "John Doe",
+  name: {
+    first: string | "John",
+    last: string | "Doe",
+  },
   email: string | "test@test.test",
+  username: string | "",
   role_id?: number | 0,
 }
 

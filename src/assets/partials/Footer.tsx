@@ -4,7 +4,7 @@ import { NavLinks } from "../components/NavLinks";
 import { LinksType } from "../../types";
 import { Link } from "react-router-dom";
 
-export default function Header() {
+export default function footer() {
   const linksData1: LinksType[] = [
     { url: "/", name: "Главная", },
     { url: "/catalog", name: "Каталог", },
@@ -16,7 +16,7 @@ export default function Header() {
     { url: "/users", name: "Пользователи" },
   ]
   return (
-    <header className="py-5">
+    <footer className="py-5 mt-16">
       <nav className="md:container m-auto flex items-center justify-between">
         <div className="flex gap-7 items-end">
           <img src="/logo/logo.svg" alt="logotype" className="h-10" />
@@ -40,6 +40,6 @@ export default function Header() {
           </Btn>
         </div>
       </nav>
-    </header>
+    </footer>
   )
 }
