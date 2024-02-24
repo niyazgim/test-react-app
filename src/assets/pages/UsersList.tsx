@@ -3,7 +3,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import axios from 'axios';
 // import { CategoriesWrapper, CategoryBtn } from "../components/CategoriesWrapper";
 // import { usersRolesData } from "../data/roles";
-import UserCard, { UserCardOnLoad } from "../components/UserCard";
+import UserCard from "../components/UserCard";
 import { UserType } from "../../types";
 
 export default function UsersList() {
@@ -23,6 +23,7 @@ export default function UsersList() {
         username: userData.login.username,
         email: userData.email,
         role_id: Math.floor(Math.random() * 3) + 1,
+        loading: false,
       };
       setUsers(users => [...users, user]);
     } catch (error) {
@@ -31,7 +32,7 @@ export default function UsersList() {
   };
 
   useEffect(() => {
-    for (let i = 0; i < 12; i++) {
+    for (let i = 0; i < 6; i++) {
       fetchUser();
     }
   }, []);
@@ -51,10 +52,10 @@ export default function UsersList() {
             dataLength={users.length}
             next={() => fetchUser()}
             hasMore={true}
-            loader={<UserCardOnLoad />}
+            loader={<></>}
             endMessage={<p>No more data to load.</p>}
           >
-            <UserCard key={key} id={user.id} imageUrl={user.imageUrl} name={user.name} email={user.email} username={user.username} />
+            <UserCard key={key} loading={user.loading} id={user.id} imageUrl={user.imageUrl} name={user.name} email={user.email} username={user.username} />
           </InfiniteScroll>
         ))}
       </div>

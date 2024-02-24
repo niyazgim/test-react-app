@@ -18,6 +18,7 @@ export type UserType = {
   email: string | "test@test.test",
   username: string | "",
   role_id?: number | 0,
+  loading?: boolean | false,
 }
 
 export type LinksType = {

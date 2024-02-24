@@ -1,36 +1,37 @@
 import { useState } from 'react';
 
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+
 interface Props {
   imageUrl: string | null;
   altText: string;
   isSmall?: boolean | false;
+  loading?: boolean | false;
 }
 
-export default function ProductImage({ imageUrl, altText, isSmall }: Props) {
+export default function ProductImage({ imageUrl, altText, isSmall, loading }: Props) {
   const [imageError, setImageError] = useState<boolean>(false);
-
-  const [imageLoading, setImageLoading] = useState<boolean>(true);
 
   const onErrorHandler = () => {
     setImageError(true);
-    setImageLoading(false);
-  };
-
-  const onLoadHandler = () => {
-    setImageLoading(false);
   };
 
   return (
     <div className="w-full aspect-square">
       {!imageError && imageUrl ? (
         <>
-          {imageLoading && <div className="w-full h-full flex flex-col gap-5 items-center justify-center"><div className="lds-ring h-5 w-5"><div></div><div></div><div></div><div></div></div></div>}
+          {loading && (
+            <Skeleton
+              circle
+              height="100%"
+              containerClassName="avatar-skeleton"
+            />)}
           <img
-            className={imageLoading ? "hidden" : "w-full h-full rounded"}
+            className={loading ? "hidden" : "w-full h-full rounded-full"}
             src={imageUrl}
             alt={altText}
             onError={onErrorHandler}
-            onLoad={onLoadHandler}
           />
         </>
       ) : (
