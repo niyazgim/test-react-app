@@ -22,7 +22,7 @@ export default function UsersList() {
       const userData = userResponse.data.results[0];
       const user: UserType = {
         id: userResponse.data.info.results,
-        imageUrl: userData.picture.large,
+        imageUrl: (Math.floor(Math.random() * 2) + 1 === 1 ? userData.picture.large : null),
         name: {
           first: userData.name.first,
           last: userData.name.last,
