@@ -9,16 +9,15 @@ export type ProductType = {
 }
 
 export type UserType = {
-  id: number | 0,
+  id: number | null,
   imageUrl: string | null,
   name: {
-    first: string | "John",
-    last: string | "Doe",
+    first: string | null,
+    last: string | null,
   },
-  email: string | "test@test.test",
-  username: string | "",
-  role_id?: number | 0,
-  loading?: boolean | false,
+  email: string | null,
+  username: string | null,
+  role_id?: number | null,
 }
 
 export type LinksType = {
