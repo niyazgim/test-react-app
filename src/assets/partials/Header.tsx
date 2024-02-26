@@ -15,6 +15,9 @@ export default function Header() {
   const linksData3: LinksType[] = [
     { url: "/users", name: "Пользователи" },
   ]
+  const linksData4: LinksType[] = [
+    { url: "/news", name: "Новости моды" },
+  ]
   return (
     <header className="py-5">
       <nav className="md:container m-auto flex items-center justify-between">
@@ -24,6 +27,7 @@ export default function Header() {
             <NavLinks> {linksData1.map((link, key) => { return (<Link key={key} to={link.url}>{link.name}</Link>) })} </NavLinks>
             <NavLinks> {linksData2.map((link, key) => { return (<Link key={key} to={link.url}>{link.name}</Link>) })} </NavLinks>
             <NavLinks> {linksData3.map((link, key) => { return (<Link key={key} to={link.url}>{link.name}</Link>) })} </NavLinks>
+            <NavLinks> {linksData4.map((link, key) => { return (<Link key={key} to={link.url}>{link.name}</Link>) })} </NavLinks>
           </div>
         </div>
         <div className="flex gap-3 items-center">

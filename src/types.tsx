@@ -20,6 +20,13 @@ export type UserType = {
   role_id?: number | null,
 }
 
+export type NewsType = {
+  id: number | null,
+  userId: number | null,
+  title: string | null,
+  body: string | null,
+}
+
 export type LinksType = {
   url: string,
   name: string | "",

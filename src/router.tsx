@@ -5,6 +5,7 @@ import Catalog from "./assets/pages/Catalog";
 import ProductPage from "./assets/pages/ProductPage";
 import UsersList from "./assets/pages/UsersList";
 import SearchPage from "./assets/pages/SearchPage";
+import NewsList from "./assets/pages/NewsList";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: '/users',
         element: <UsersList />,
+      },
+      {
+        path: '/news',
+        element: <NewsList />,
       },
       // {
       //   path: '/login',
