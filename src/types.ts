@@ -23,6 +23,7 @@ export type UserType = {
 export type NewsType = {
   id: number | null,
   userId: number | null,
+  imageUrl: string | null,
   title: string | null,
   body: string | null,
 }

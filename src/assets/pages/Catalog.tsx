@@ -1,6 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 import { CategoriesWrapper, CategoryBtn } from "../components/CategoriesWrapper";
-import ProductCard from "../components/ProductCard";
+import ProductCard from "../components/cards/ProductCard";
 import { productsCategoryData } from "../data/categories";
 
 import { productsData } from "../data/products";

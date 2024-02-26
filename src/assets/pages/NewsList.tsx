@@ -5,7 +5,8 @@ import axios from 'axios';
 // import { usersRolesData } from "../data/roles";
 import useWindowDimensions from '../hooks/useWindowDimensions';
 import { NewsType } from "../../types";
-import NewsCard from '../components/NewsCard';
+import NewsCard from '../components/cards/NewsCard';
+import AddNewsModal from '../components/modals/AddNewsModal';
 
 export default function NewsList() {
   const [news, setNews] = useState<NewsType[]>([]);
@@ -13,22 +14,29 @@ export default function NewsList() {
   const contentRef = useRef<HTMLDivElement>(null);
   const { height: windowHeight } = useWindowDimensions();
   const [isFetching, setIsFetching] = useState(false);
-  // const [fetchChunkSize, setFetchChunkSize] = useState(0);
 
   const [scrollTop, setScrollTop] = useState(0);
 
   const fetchNews = async () => {
     try {
       const newsResponse = await axios.get(`https://jsonplaceholder.typicode.com/posts/${nid}`);
-      setNid(nid => nid + 1);
-      const newsData = newsResponse.data;
-      const newNews: NewsType = {
-        id: newsData.id,
-        userId: newsData.userId,
-        title: newsData.title,
-        body: newsData.body,
-      };
-      setNews(news => [...news, newNews]);
+      try {
+        const newsData = newsResponse.data;
+        const newNews: NewsType = {
+          id: newsData.id,
+          userId: newsData.userId,
+          imageUrl: null,
+          title: newsData.title,
+          body: newsData.body,
+        };
+        const newsImageResponse = await axios.get(`https://jsonplaceholder.typicode.com/photos/${nid}`);
+        const newsImageData = newsImageResponse.data;
+        newNews.imageUrl = newsImageData.url;
+        setNid(nid => nid + 1);
+        setNews(news => [...news, newNews]);
+      } catch (error) {
+        console.error('Error fetching news image:', error);
+      }
     } catch (error) {
       console.error('Error fetching news:', error);
     }
@@ -77,10 +85,13 @@ export default function NewsList() {
           <CategoryBtn key={key} id={category.id} name={category.name} />
         ))}
       </CategoriesWrapper> */}
-      <h1 className='mt-4 text-5xl font-semibold'>Новости моды</h1>
-      <div ref={contentRef} className="grid grid-cols-3 gap-x-5 gap-y-5 mt-12">
+      <div className='flex items-center justify-between'>
+        <h1 className='mt-4 text-5xl font-semibold'>Новости моды</h1>
+        <AddNewsModal />
+      </div>
+      <div ref={contentRef} className="grid grid-cols-3 gap-x-8 gap-y-8 mt-12">
         {news.map((news, key) => (
-          <NewsCard key={key} id={news.id} userId={news.userId} title={news.title} body={news.body} />
+          <NewsCard key={key} id={news.id} userId={news.userId} imageUrl={news.imageUrl} title={news.title} body={news.body} />
         ))}
       </div>
       <div ref={ref}></div>

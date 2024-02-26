@@ -1,4 +1,4 @@
-import ProductCard from "../components/ProductCard"
+import ProductCard from "../components/cards/ProductCard"
 import { productsData } from "../data/products"
 import { Link, useSearchParams } from 'react-router-dom'
 

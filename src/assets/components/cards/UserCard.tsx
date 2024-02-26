@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
-import { UserType } from "../../types";
-import UserImage from "./UserImage";
+import { UserType } from "../../../types";
+import UserImage from "../images/UserImage";
 
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 
-export default function UserCard( user: UserType): JSX.Element {
+export default function UserCard(user: UserType): JSX.Element {
   return (
     <SkeletonTheme baseColor="#202020" highlightColor="#444">
       <article className="w-full flex gap-3">

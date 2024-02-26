@@ -4,7 +4,7 @@ import axios from 'axios';
 // import { CategoriesWrapper, CategoryBtn } from "../components/CategoriesWrapper";
 // import { usersRolesData } from "../data/roles";
 import useWindowDimensions from '../hooks/useWindowDimensions';
-import UserCard from "../components/UserCard";
+import UserCard from "../components/cards/UserCard";
 import { UserType } from "../../types";
 
 export default function UsersList() {

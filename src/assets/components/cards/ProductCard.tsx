@@ -1,6 +1,6 @@
-import Btn from "./Btn";
-import ProductImage from "./ProductImage";
-import { ProductType } from "../../types";
+import Btn from "../Btn";
+import ProductImage from "../images/ProductImage";
+import { ProductType } from "../../../types";
 import { Link } from "react-router-dom";
 
 export default function ProductCard({ id, imageUrl, name, price }: ProductType): JSX.Element {

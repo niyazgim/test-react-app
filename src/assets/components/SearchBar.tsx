@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useAnimate } from "framer-motion";
-import { ProductSuggestionsCard } from "./ProductCard";
+import { ProductSuggestionsCard } from "./cards/ProductCard";
 import { productsData } from "../data/products";
 import { ProductType } from "../../types";
 
@@ -63,7 +63,7 @@ export default function SearchBar() {
     const searchQuery = event?.target.value;
     setSearchQuery(searchQuery);
     setSuggestions([]);
-    if(searchQuery.length > 0) {
+    if (searchQuery.length > 0) {
       const productsDataFiltered: ProductType[] = productsData.filter(item =>
         item.name.toLowerCase().includes(searchQuery.toLowerCase())
       );
