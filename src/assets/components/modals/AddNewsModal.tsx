@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -36,29 +36,32 @@ export default function AddNewsModal(): JSX.Element {
   const [authorSearchText, setAuthorSearchText] = useState("");
   const [authors, setAuthors] = useState<Author[]>([]);
   const [selectedAuthor, setSelectedAuthor] = useState<Author | null>(null);
+  const [isSubmitSuccessful, setIsSubmitSuccessful] = useState<boolean>(false);
 
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>({ mode: "onChange", resolver: yupResolver(schema), });
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>({ mode: "onChange", resolver: yupResolver(schema), });
 
   async function handleAuthorSearch(e: React.ChangeEvent<HTMLInputElement>) {
-    setAuthorSearchText(e.target.value);
     setAuthors([]);
-    try {
-      setIsAuthorsFetching(true);
-      const request = await axios.get(`https://dummyjson.com/users/search?q=${e.target?.value}`);
-      const response = request.data.users;
-      response.map((el: authorRequest) => {
-        const author: Author = {
-          name: {
-            firstName: el.firstName ? el.firstName : "",
-            lastName: el.lastName ? el.lastName : "",
-          },
-          id: el.id,
-        }
-        setAuthors([...authors, author]);
-      });
-      setIsAuthorsFetching(false);
-    } catch (error) {
-      console.error('Error fetching author:', error);
+    setAuthorSearchText(e.target.value);
+    if (!isAuthorsFetching) {
+      try {
+        setIsAuthorsFetching(true);
+        const request = await axios.get(`https://dummyjson.com/users/search?q=${e.target?.value}`)
+        const response = request.data.users;
+        response.map((el: authorRequest) => {
+          const author: Author = {
+            name: {
+              firstName: el.firstName ? el.firstName : "",
+              lastName: el.lastName ? el.lastName : "",
+            },
+            id: el.id,
+          }
+          setAuthors([...authors, author]);
+        });
+        setIsAuthorsFetching(false);
+      } catch (error) {
+        console.error('Error fetching author:', error);
+      }
     }
   }
   const handleAuthorSelection = (author: Author) => {
@@ -79,7 +82,23 @@ export default function AddNewsModal(): JSX.Element {
     });
     const response = request.data;
     console.log(response);
+    setIsSubmitSuccessful(true);
+    setShowModal(false);
   };
+
+  useEffect(() => {
+    if (showModal) {
+      document.body.classList.add("overflow-y-hidden")
+    } else {
+      document.body.classList.remove("overflow-y-hidden")
+    }
+  }, [showModal]);
+
+  useEffect(() => {
+    reset();
+    setSelectedAuthor(null);
+    setIsSubmitSuccessful(false);
+  }, [isSubmitSuccessful])
 
   return (
     <>
@@ -90,6 +109,11 @@ export default function AddNewsModal(): JSX.Element {
         <dialog className="flex justify-center items-center bg-transparent overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
           <div className="relative my-6 mx-auto max-w-4xl">
             <div className="py-5 border-0 rounded-lg shadow-lg relative flex flex-col w-96 bg-gray-900 outline-none focus:outline-none">
+              <button onClick={() => setShowModal(false)} className="absolute top-2 right-2 ">
+                <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6.61136 19.1859L5.21136 17.7859L10.8114 12.1859L5.21136 6.58591L6.61136 5.18591L12.2114 10.7859L17.8114 5.18591L19.2114 6.58591L13.6114 12.1859L19.2114 17.7859L17.8114 19.1859L12.2114 13.5859L6.61136 19.1859Z" fill="#F0F0F0" />
+                </svg>
+              </button>
               <div className="px-5">
                 <form method="post" className="w-full" onSubmit={handleSubmit(onSubmit)}>
                   <div className="mt-2">
