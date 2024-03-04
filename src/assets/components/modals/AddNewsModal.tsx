@@ -13,7 +13,7 @@ interface FormData {
 interface authorRequest {
   firstName: string,
   lastName: string,
-  id: number,
+  id: string,
 }
 
 const schema = yup.object().shape({
@@ -25,6 +25,8 @@ const schema = yup.object().shape({
 export default function AddNewsModal(): JSX.Element {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [isAuthorsFetching, setIsAuthorsFetching] = useState<boolean>(false);
+  const [selectedAuthor, setSelectedAuthor] = useState<{ value: string; label: string; }>();
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [isSubmitSuccessful, setIsSubmitSuccessful] = useState<boolean>(false);
 
   const { register, handleSubmit, formState: { errors }, reset, control } = useForm<FormData>({ mode: "onBlur", resolver: yupResolver(schema), });
@@ -49,6 +51,7 @@ export default function AddNewsModal(): JSX.Element {
   };
 
   const onSubmit = async (data: FormData) => {
+    setIsSubmitting(true);
     const request = await axios({
       method: "POST",
       url: 'https://jsonplaceholder.typicode.com/posts',
@@ -60,9 +63,15 @@ export default function AddNewsModal(): JSX.Element {
     });
     const response = request.data;
     console.log(response);
+    setIsSubmitting(false);
     setIsSubmitSuccessful(true);
     setShowModal(false);
   };
+
+  function resetAuthorSelection() {
+    setSelectedAuthor(undefined);
+    reset({ "authorId": undefined });
+  }
 
   useEffect(() => {
     if (showModal)
@@ -74,7 +83,9 @@ export default function AddNewsModal(): JSX.Element {
   useEffect(() => {
     reset();
     setIsSubmitSuccessful(false);
+    resetAuthorSelection();
   }, [isSubmitSuccessful, reset]);
+
 
   return (
     <>
@@ -125,23 +136,33 @@ export default function AddNewsModal(): JSX.Element {
                                 cacheOptions
                                 defaultOptions
                                 loadOptions={handleAuthorSearch}
-                                getOptionValue={(option) => { const temp = option as unknown as { value: string, label: string; }; return `${temp.value}` }}
-                                onChange={(selectedOption) => {
-                                  const temp = selectedOption as unknown as { value: string, label: string; };
+                                onChange={e => {
+                                  const temp = e as unknown as { value: string, label: string, };
+                                  setSelectedAuthor(temp);
                                   field.onChange(temp.value);
-                                  
                                 }}
-                                getOptionLabel={(option) => { const temp = option as unknown as { value: string, label: string; }; return `${temp.label}` }}
-                                placeholder="Select an option"
+                                placeholder="Выберите автора"
                               />
                             )}
                           />
+                          {selectedAuthor && (
+                            <div className="absolute top-0 left-0 w-full h-full rounded z-30 bg-white flex items-center justify-between px-2">
+                              <p>{selectedAuthor.label}</p>
+                              <button onClick={() => { resetAuthorSelection() }}>
+                                <svg className="h-5 fill-black" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M6.61136 19.1859L5.21136 17.7859L10.8114 12.1859L5.21136 6.58591L6.61136 5.18591L12.2114 10.7859L17.8114 5.18591L19.2114 6.58591L13.6114 12.1859L19.2114 17.7859L17.8114 19.1859L12.2114 13.5859L6.61136 19.1859Z" fill="currentColor" />
+                                </svg>
+                              </button>
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
                     {errors.authorId && <p className="mt-1 text-red-600 ">{errors.authorId.message}</p>}
                   </div >
-                  <button type="submit" className="w-full py-3 px-5 mt-12 bg-purple-400 text-white rounded">
+                  <button type="submit" disabled={isSubmitting}
+                  className="w-full py-3 px-5 mt-12 bg-purple-400 text-white rounded"
+                  >
                     Добавить новость
                   </button>
                 </form>
