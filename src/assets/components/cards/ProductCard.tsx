@@ -2,16 +2,18 @@ import Btn from "../Btn";
 import ProductImage from "../images/ProductImage";
 import { ProductType } from "../../../types";
 import { Link } from "react-router-dom";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+
 
 export default function ProductCard({ id, imageUrl, name, price }: ProductType): JSX.Element {
   return (
     <article className="w-full">
       <Link to={"/catalog/" + id}>
-        <ProductImage imageUrl={"/products/" + imageUrl} altText={name} />
+        <ProductImage imageUrl={imageUrl} altText={name} />
       </Link>
       <h3 className="mt-4 text-sm">{name}</h3>
       <div className="mt-1 flex justify-between items-center">
-        <p className="text-xl">{price} ₽</p>
+        <p className="text-xl">{price} $</p>
         <menu className="flex items-center gap-1">
           <Btn>
             <svg className="h-5" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -28,6 +30,25 @@ export default function ProductCard({ id, imageUrl, name, price }: ProductType):
     </article>
   )
 }
+export function ProductCardOnLoad(): JSX.Element {
+  return (
+    <SkeletonTheme baseColor="#202020" highlightColor="#444">
+      <article className="w-full">
+        <Skeleton className="w-full aspect-square" />
+        <Skeleton className="w-full" />
+        <div className="mt-1 flex justify-between items-center">
+          <div className="w-full h-5">
+            <Skeleton className="w-full h-5" />
+          </div>
+          <div className="ml-1 flex gap-1">
+            <Skeleton className="w-5 h-5" />
+            <Skeleton className="w-5 h-5" />
+          </div>
+        </div>
+      </article>
+    </SkeletonTheme>
+  )
+}
 
 export function ProductSuggestionsCard({ id, imageUrl, name, price }: ProductType): JSX.Element {
   return (
@@ -38,7 +59,7 @@ export function ProductSuggestionsCard({ id, imageUrl, name, price }: ProductTyp
       <div className="w-full flex justify-between items-center">
         <div>
           <h3 className="text-xl font-bold">{name}</h3>
-          <p className="text-x">{price} ₽</p>
+          <p className="text-x">{price} $</p>
         </div>
         <div className="flex gap-1 items-center">
           <Btn>
