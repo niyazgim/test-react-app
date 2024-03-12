@@ -41,7 +41,6 @@ export type CategoryType = {
 export type RoleType = {
   id: number | null,
   name: string | "",
-  key: string | "",
 }
 
 export type PropsType = {
