@@ -5,6 +5,7 @@ import ProductCard, { ProductCardOnLoad } from "../components/cards/ProductCard"
 import axios from "axios";
 import { ProductType } from "../../types";
 import { useEffect, useState } from "react";
+import BtnsDropdown from "../components/BtnsDropdown";
 
 type ResponseType = {
   id: string,
@@ -53,10 +54,13 @@ export default function Catalog() {
 
   return (
     <section className="md:container m-auto pt-5" >
-      <CategoriesWrapper>
-        <CategoryBtn name={"Все"} />
-        {categories.map((category) => { return (<CategoryBtn name={category} />) })}
-      </CategoriesWrapper>
+      <div className="flex items-center justify-between">
+        <CategoriesWrapper>
+          <CategoryBtn name={"Все"} />
+          {categories.map((category) => { return (<CategoryBtn name={category} />) })}
+        </CategoriesWrapper>
+        <BtnsDropdown/>
+      </div>
       <div className="grid grid-cols-4 gap-x-10 gap-y-10 mt-12">
         {loading ? placeholderBlogs.map((_, idx) => (<ProductCardOnLoad key={idx} />))
           : products.map((product) => { return (<ProductCard id={product.id} imageUrl={product.imageUrl} name={product.name} price={product.price} />) })}
