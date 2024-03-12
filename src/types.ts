@@ -34,8 +34,8 @@ export type LinksType = {
 }
 
 export type CategoryType = {
-  // id: number | null,
-  name: string | "",
+  label: string,
+  value: string,
 }
 
 export type RoleType = {

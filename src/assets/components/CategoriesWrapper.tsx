@@ -1,17 +1,20 @@
 import { CategoryType, PropsType } from "../../types";
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
+import useQueryParamsManager from "../hooks/useQueryParamsManager";
 
-export function CategoryBtn({ name }: CategoryType): JSX.Element {
+
+export function CategoryBtn({ value, label }: CategoryType): JSX.Element {
+  const manageQueryParams = useQueryParamsManager();
   let isSelected = false;
   const [searchParams] = useSearchParams();
 
   const selectedCategory = searchParams.get('cat');
-  if ((!selectedCategory && !name) || (name === selectedCategory)) isSelected = true;
+  if ((!selectedCategory && !value) || (value === selectedCategory)) isSelected = true;
 
   return (
-    <Link to={`/catalog?${name ? `cat=${name}` : ``}`} data-id={name} className={`px-5 py-2 border ${isSelected ? `border-gray-400` : `border-gray-600`}`}>
-      {name}
-    </Link>
+    <button onClick={() => manageQueryParams({ cat: value })} className={`px-5 py-2 border ${isSelected ? `border-gray-400` : `border-gray-600`}`}>
+      {label}
+    </button>
   );
 }
 

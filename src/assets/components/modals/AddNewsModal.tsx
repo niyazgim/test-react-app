@@ -136,6 +136,8 @@ export default function AddNewsModal(): JSX.Element {
                                 cacheOptions
                                 defaultOptions
                                 loadOptions={handleAuthorSearch}
+                                className="my-react-select-container w-full h-10"
+                                classNamePrefix="my-react-select"
                                 onChange={e => {
                                   const temp = e as unknown as { value: string, label: string, };
                                   setSelectedAuthor(temp);
@@ -146,11 +148,11 @@ export default function AddNewsModal(): JSX.Element {
                             )}
                           />
                           {selectedAuthor && (
-                            <div className="absolute top-0 left-0 w-full h-full rounded z-30 bg-white flex items-center justify-between px-2">
-                              <p>{selectedAuthor.label}</p>
+                            <div className="border absolute top-0 left-0 w-full h-10 rounded-sm z-30 bg-gray-900 border-gray-700 flex items-center justify-between px-2">
+                              <p className="text-white">{selectedAuthor.label}</p>
                               <button onClick={() => { resetAuthorSelection() }}>
-                                <svg className="h-5 fill-black" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                  <path d="M6.61136 19.1859L5.21136 17.7859L10.8114 12.1859L5.21136 6.58591L6.61136 5.18591L12.2114 10.7859L17.8114 5.18591L19.2114 6.58591L13.6114 12.1859L19.2114 17.7859L17.8114 19.1859L12.2114 13.5859L6.61136 19.1859Z" fill="currentColor" />
+                                <svg className="h-5" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                  <path className="fill-white" d="M6.61136 19.1859L5.21136 17.7859L10.8114 12.1859L5.21136 6.58591L6.61136 5.18591L12.2114 10.7859L17.8114 5.18591L19.2114 6.58591L13.6114 12.1859L19.2114 17.7859L17.8114 19.1859L12.2114 13.5859L6.61136 19.1859Z" fill="currentColor" />
                                 </svg>
                               </button>
                             </div>
@@ -161,7 +163,7 @@ export default function AddNewsModal(): JSX.Element {
                     {errors.authorId && <p className="mt-1 text-red-600 ">{errors.authorId.message}</p>}
                   </div >
                   <button type="submit" disabled={isSubmitting}
-                  className="w-full py-3 px-5 mt-12 bg-purple-400 text-white rounded"
+                    className="w-full py-3 px-5 mt-12 bg-purple-400 text-white rounded"
                   >
                     Добавить новость
                   </button>
