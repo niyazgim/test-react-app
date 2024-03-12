@@ -51,12 +51,12 @@ export function ProductCardOnLoad(): JSX.Element {
 export function ProductSuggestionsCard({ id, imageUrl, name, price }: ProductType): JSX.Element {
   return (
     <div data-id={id} className="py-2 px-2 flex gap-3">
-      <div className="aspect-square w-16">
-        <ProductImage imageUrl={"/products/" + imageUrl} altText={name} isSmall={true} />
-      </div>
+      <Link className="aspect-square w-16" to={`/catalog/${id}`}>
+        <ProductImage imageUrl={imageUrl} altText={name} isSmall={true} />
+      </Link>
       <div className="w-full flex justify-between items-center">
         <div>
-          <h3 className="text-xl font-bold">{name}</h3>
+          <h3 className="text-sm font-bold">{name}</h3>
           <p className="text-x">{price} $</p>
         </div>
         <div className="flex gap-1 items-center">

@@ -97,6 +97,7 @@ export default function Catalog() {
         <Select
           isClearable
           options={sortingOptions}
+          placeholder="Сортировать по"
           onChange={e => {
             const temp = e as unknown as { value: string, label: string, };
             if (temp)

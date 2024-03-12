@@ -86,7 +86,6 @@ export default function AddNewsModal(): JSX.Element {
     resetAuthorSelection();
   }, [isSubmitSuccessful, reset]);
 
-
   return (
     <>
       <button className="rounded px-5 py-3 bg-purple-400" onClick={() => setShowModal(true)}>
