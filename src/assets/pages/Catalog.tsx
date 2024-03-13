@@ -89,7 +89,7 @@ export default function Catalog() {
   const manageQueryParams = useQueryParamsManager();
   return (
     <section className="md:container m-auto pt-5" >
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between sticky top-20 py-5 z-40 self-start dark:bg-main-bg-dark">
         <CategoriesWrapper>
           <CategoryBtn label={"Все"} value="Все" />
           {categories.map((category, key) => { return (<CategoryBtn key={key} label={category.label} value={category.value} />) })}

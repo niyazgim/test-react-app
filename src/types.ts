@@ -8,6 +8,11 @@ export type ProductType = {
   category_id?: string | "",
 }
 
+export type CartProductType = {
+  product: ProductType,
+  quantity: number,
+}
+
 export type UserType = {
   id: number | null,
   imageUrl: string | null,
@@ -43,6 +48,6 @@ export type RoleType = {
   name: string | "",
 }
 
-export type PropsType = {
+export type ClildPropType = {
   children: string | JSX.Element | JSX.Element[] | ReactNode,
 }

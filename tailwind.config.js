@@ -8,6 +8,7 @@ export default {
       colors: {
         "brand-dark": "#A020F0",
         "brand-dark--hover": "#A33CD7",
+        "main-bg-dark": "#121212",
       },
     },
   },
