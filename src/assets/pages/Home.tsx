@@ -1,6 +1,7 @@
-import { Link } from "react-router-dom";
 import ProductsSlider from "../components/ProductsSlider";
 import Accordion from "../components/Accordion";
+import { Link } from "react-router-dom";
+import Logo from "../components/Logo";
 
 export default function Home() {
   return (
@@ -8,9 +9,15 @@ export default function Home() {
       <section className="banner relative h-2/6">
         <img src="/banner/man_banner.png" alt="man_banner" />
         <div className="h-full relative z-10 flex flex-col justify-center items-center">
-          <img src="/logo/logo.svg" className="h-24" alt="logo" />
-          <h3 className="mt-5 md:text-2xl">Бренд одежды</h3>
-          <Link to="/catalog" className="mt-7 py-3 px-6 rounded-lg bg-purple-400">Перейти в категории</Link>
+          <Logo className="h-16" />
+          <h3 className="mt-10 md:text-2xl">Бренд одежды</h3>
+          <Link to={`/catalog`}
+            className="
+            mt-10 py-4 px-6 rounded-md flex justify-center items-center 
+            dark:bg-brand-dark hover:bg-brand-dark--hover 
+            transition-all ease-out duration-250
+            text-xl"
+          >Перейти в каталог</Link>
         </div>
         <img src="/banner/woman_banner.png" alt="woman_banner" />
         <div className="banner__gradient absolute top-0 left-0 w-full h-full "></div>
