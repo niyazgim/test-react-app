@@ -9,7 +9,7 @@ export type ProductType = {
 }
 
 export type CartProductType = {
-  product: ProductType,
+  productId: string,
   quantity: number,
 }
 

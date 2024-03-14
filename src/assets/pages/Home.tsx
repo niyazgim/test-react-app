@@ -1,27 +1,40 @@
 import Accordion from "../components/Accordion";
-import { Link } from "react-router-dom";
+import BannerCard, { BannerCardProps } from "../components/cards/BannerCard";
+
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/autoplay';
+
+import { Autoplay } from 'swiper/modules'
+
 
 export default function Home() {
+  const bannerCards: BannerCardProps[] = [
+    { linkTo: `/catalog`, image: `/banner/banner-1.png`, title: `Мужская одежда` },
+    { linkTo: `/catalog`, image: `/banner/banner-4.png`, title: `Женская одежда` },
+    { linkTo: `/catalog`, image: `/banner/banner-2.png`, title: `Аксессуары` },
+    { linkTo: `/catalog`, image: `/banner/banner-6.png`, title: `Весна` },
+    { linkTo: `/catalog`, image: `/banner/banner-7.png`, title: `Рюкзаки` },
+    { linkTo: `/catalog`, image: `/banner/banner-5.png`, title: `Кольца` },
+    { linkTo: `/catalog`, image: `/banner/banner-3.png`, title: `Ювелирные изделия` },
+  ];
   return (
     <>
-      <section className="md:container mx-auto grid grid-cols-[1fr_1fr_1fr_1fr] w-full py-12">
-        <Link to="/catalog" className="relative">
-          <img src="/banner/man_banner.png" alt="man_banner" />
-          <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-main-bg-dark flex items-center justify-center py-5 text-md font-medium">Мужская одежда</div>
-        </Link>
-        <Link to="/catalog" className="relative">
-          <img src="/banner/man_banner.png" alt="man_banner" />
-          <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-main-bg-dark flex items-center justify-center py-5 text-md font-medium">Мужская одежда</div>
-        </Link>
-        <Link to="/catalog" className="relative">
-          <img src="/banner/man_banner.png" alt="man_banner" />
-          <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-main-bg-dark flex items-center justify-center py-5 text-md font-medium">Мужская одежда</div>
-        </Link>
-        <Link to="/catalog" className="relative">
-          <img src="/banner/man_banner.png" alt="man_banner" />
-          <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-main-bg-dark flex items-center justify-center py-5 text-md font-medium">Мужская одежда</div>
-        </Link>
-
+      <section className="w-full py-12">
+        <Swiper
+          spaceBetween={0}
+          slidesPerView={4}
+          loop={true}
+          speed={400}
+          autoplay={{
+            delay: 7500,
+            stopOnLastSlide: false,
+            disableOnInteraction: false,
+          }}
+          modules={[Autoplay]}
+        >
+          {bannerCards.map((bannerCard, key) => (<SwiperSlide key={key}><BannerCard linkTo={bannerCard.linkTo} image={bannerCard.image} title={bannerCard.title} /></SwiperSlide>))}
+        </Swiper>
       </section>
       <section className="md:container mx-auto pt-10">
         <h2 className="mb-5 text-2xl font-semibold">Вопрос-ответ</h2>
