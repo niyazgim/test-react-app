@@ -7,14 +7,14 @@ import { IconBtn } from "../Btn";
 async function addToCard(pid: number) {
   if (localStorage.getItem('cart')) {
     const products = JSON.parse(localStorage.getItem('cart')!)
-    if(products.find((e:CartProductType) => e.productId === String(pid))) {
+    if (products.find((e: CartProductType) => e.productId === String(pid))) {
       products.map((product: CartProductType) => {
-        if (product.productId == String(pid)){
+        if (product.productId == String(pid)) {
           product.quantity = product.quantity + 1;
         }
       });
     } else {
-      products.push({productId: String(pid), quantity: 1});
+      products.push({ productId: String(pid), quantity: 1 });
     }
     localStorage.setItem('cart', JSON.stringify(products))
   } else {
@@ -103,14 +103,14 @@ interface ProductCartCardProps {
 
 export function ProductCartCard({ product, quantity }: ProductCartCardProps): JSX.Element {
   return (
-    <div data-id={product.id} className="py-2 px-2 flex gap-3">
+    <div data-id={product.id} className="flex gap-3">
       <Link className="aspect-square w-16 relative" to={`/catalog/${product.id}`}>
 
         <ProductImage imageUrl={product.image} altText={product.title} isSmall={true} />
       </Link>
       <div className="w-full flex justify-between items-center">
         <div>
-          <h3 className="text-sm font-bold">{product.title}</h3>
+          <h3 className="text-sm font-bold">{product.title.length > 50 ? `${product.title.substring(0, 50)}...` : product.title} </h3>
           <p className="text-x">{product.price} $</p>
         </div>
         <menu className="flex gap-1 items-center">
