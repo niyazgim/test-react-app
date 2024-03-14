@@ -20,7 +20,7 @@ export default function Home() {
   ];
   return (
     <>
-      <section className="w-full py-12">
+      <section className="w-full py-6">
         <Swiper
           spaceBetween={0}
           slidesPerView={4}

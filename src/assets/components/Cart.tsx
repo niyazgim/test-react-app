@@ -1,16 +1,33 @@
 import { useEffect, useState } from "react";
 import { IconBtn } from "./Btn";
 import { ProductCartCard } from "./cards/ProductCard";
-import { CartProductType } from "../../types";
+import { CartProductType, ProductResponseType } from "../../types";
+import axios from "axios";
+
+interface CartProductsProps {
+  product: ProductResponseType,
+  quantity: number,
+}
 
 export default function Cart() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [cartProducts, setCartProducts] = useState<CartProductType[]>([]);
+  const [fetchedProducts, setFetchedProducts] = useState<CartProductsProps[]>([]);
+
+
+  async function fetchProduct(productId: string, quantity: number) {
+    const productResponse = await axios.get(`https://fakestoreapi.com/products/${productId}`);
+    setFetchedProducts(fetchedProducts => [...fetchedProducts, { product: productResponse.data, quantity: quantity }]);
+  }
 
   useEffect(() => {
     if (localStorage.getItem('cart')) {
-      setCartProducts(JSON.parse(localStorage.getItem('cart')!));
-      console.log(cartProducts);
+      const products: CartProductType[] = [];
+      JSON.parse(localStorage.getItem('cart')!).map((product: CartProductType) => {
+        products.push({ productId: product.productId, quantity: product.quantity });
+      });
+      setCartProducts(products);
+      products.map(product => { console.log(product); fetchProduct(product.productId, product.quantity); });
     }
   }, [localStorage.getItem('cart')]);
   return (
@@ -32,7 +49,7 @@ export default function Cart() {
         dark:bg-neutral-900`}
         >
           {cartProducts.length > 0 ?
-            cartProducts.map((cartProduct, key) => (<ProductCartCard key={key} productId={cartProduct.productId} quantity={cartProduct.quantity} />)) : (
+            fetchedProducts.map((cartProduct, key) => { return (<ProductCartCard key={key} product={cartProduct.product} quantity={cartProduct.quantity} />) }) : (
               <p>Вы ничего не добавили в корзину</p>
             )}
         </div>

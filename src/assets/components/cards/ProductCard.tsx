@@ -1,18 +1,21 @@
 import ProductImage from "../images/ProductImage";
-import { CartProductType, ProductType } from "../../../types";
+import { CartProductType, ProductResponseType, ProductType } from "../../../types";
 import { Link } from "react-router-dom";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { IconBtn } from "../Btn";
-import { useEffect, useState } from "react";
-import axios from "axios";
 
 async function addToCard(pid: number) {
   if (localStorage.getItem('cart')) {
-    const products = JSON.parse(localStorage.getItem('cart')!);
-    products.map((product: CartProductType) => {
-      if (product.productId == String(pid))
-        product.quantity = product.quantity + 1;
-    });
+    const products = JSON.parse(localStorage.getItem('cart')!)
+    if(products.find((e:CartProductType) => e.productId === String(pid))) {
+      products.map((product: CartProductType) => {
+        if (product.productId == String(pid)){
+          product.quantity = product.quantity + 1;
+        }
+      });
+    } else {
+      products.push({productId: String(pid), quantity: 1});
+    }
     localStorage.setItem('cart', JSON.stringify(products))
   } else {
     const products: CartProductType[] = [
@@ -93,33 +96,22 @@ export function ProductSuggestionsCard({ id, imageUrl, name, price }: ProductTyp
   )
 }
 
-export function ProductCartCard({ productId, quantity }: CartProductType): JSX.Element {
-  type ResponseType = {
-    id: string,
-    image: string,
-    title: string,
-    price: string,
-  }
-  const [fetchedProduct, setFetchedProduct] = useState<ResponseType>();
+interface ProductCartCardProps {
+  product: ProductResponseType,
+  quantity: number,
+}
 
-  async function fetchProduct() {
-    const productResponse = await axios.get(`https://fakestoreapi.com/products/${productId}`);
-    setFetchedProduct(productResponse.data);
-  }
-
-  useEffect(() => {
-    fetchProduct();
-  }, [productId]);
+export function ProductCartCard({ product, quantity }: ProductCartCardProps): JSX.Element {
   return (
-    <div data-id={fetchedProduct!.id} className="py-2 px-2 flex gap-3">
-      <Link className="aspect-square w-16 relative" to={`/catalog/${fetchedProduct!.id}`}>
+    <div data-id={product.id} className="py-2 px-2 flex gap-3">
+      <Link className="aspect-square w-16 relative" to={`/catalog/${product.id}`}>
 
-        <ProductImage imageUrl={fetchedProduct!.image} altText={fetchedProduct!.title} isSmall={true} />
+        <ProductImage imageUrl={product.image} altText={product.title} isSmall={true} />
       </Link>
       <div className="w-full flex justify-between items-center">
         <div>
-          <h3 className="text-sm font-bold">{fetchedProduct!.title}</h3>
-          <p className="text-x">{fetchedProduct!.price} $</p>
+          <h3 className="text-sm font-bold">{product.title}</h3>
+          <p className="text-x">{product.price} $</p>
         </div>
         <menu className="flex gap-1 items-center">
           <IconBtn>

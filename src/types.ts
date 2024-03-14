@@ -1,5 +1,13 @@
 import { ReactNode } from "react"
 
+export type ProductResponseType = {
+  id: string,
+  image: string,
+  title: string,
+  price: string,
+  // category: string,
+}
+
 export type ProductType = {
   id: number | 0,
   imageUrl: string | null,
