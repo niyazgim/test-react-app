@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { IconBtn } from "./Btn";
+import { IconBtn, LinkBtn } from "./Btn";
 import { ProductCartCard } from "./cards/ProductCard";
 import { CartProductType, ProductResponseType } from "../../types";
 import axios from "axios";
@@ -14,7 +14,6 @@ export default function Cart() {
   const [cartProducts, setCartProducts] = useState<CartProductType[]>([]);
   const [fetchedProducts, setFetchedProducts] = useState<CartProductsProps[]>([]);
 
-
   async function fetchProduct(productId: string, quantity: number) {
     const productResponse = await axios.get(`https://fakestoreapi.com/products/${productId}`);
     setFetchedProducts(fetchedProducts => [...fetchedProducts, { product: productResponse.data, quantity: quantity }]);
@@ -22,15 +21,25 @@ export default function Cart() {
 
   // ! duplicates the cart products
   useEffect(() => {
-    if (localStorage.getItem('cart')) {
-      const products: CartProductType[] = [];
-      JSON.parse(localStorage.getItem('cart')!).map((product: CartProductType) => {
-        products.push({ productId: product.productId, quantity: product.quantity });
-      });
-      setCartProducts(products);
-      products.map(product => { console.log(product); fetchProduct(product.productId, product.quantity); });
-    }
-  }, [localStorage.getItem('cart')]);
+    const interval = setInterval(() => {
+      if (localStorage.getItem('cart')) {
+        const updatedProducts: CartProductType[] = JSON.parse(localStorage.getItem('cart')!).map((product: CartProductType) => ({
+          productId: product.productId,
+          quantity: product.quantity,
+        }));
+        // const newProducts = updatedProducts.filter(product => !cartProducts.some(cp => cp.productId === product.productId));
+        setCartProducts([...updatedProducts]);
+        updatedProducts.map(product => {
+          if(fetchedProducts.find(e => e.product.id === product.productId)?.quantity != updatedProducts.find(e => e.productId === product.productId)?.quantity)
+            fetchProduct(product.productId, product.quantity);
+        });
+        console.log(cartProducts)
+      }
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [cartProducts, fetchedProducts]);
+
   return (
     <div>
       <IconBtn className={`${isOpen ? `dark:bg-neutral-900 rounded-es-none rounded-ee-none dark:hover:bg-neutral-900` : ``} relative`} onClick={() => setIsOpen(!isOpen)}>
@@ -45,14 +54,32 @@ export default function Cart() {
       </IconBtn>
       <div className="relative">
         <div
-          className={`${isOpen ? `block` : `hidden`} absolute z-40 right-0 top-0 p-2
-          rounded-2xl rounded-se-none w-[30rem]
+          className={`${isOpen ? `block` : `hidden`} absolute z-40 right-0 top-0 p-5
+          rounded-2xl lg:h-[30rem] overflow-y-scroll rounded-se-none w-[30rem]
         dark:bg-neutral-900`}
         >
-          {cartProducts.length > 0 ?
-            fetchedProducts.map((cartProduct, key) => { return (<ProductCartCard key={key} product={cartProduct.product} quantity={cartProduct.quantity} />) }) : (
-              <p>Вы ничего не добавили в корзину</p>
-            )}
+          {cartProducts.length > 0 ? (
+            <>
+              <div className="flex justify-between items-center">
+                <h2 className="text-2xl font-bold">Корзина</h2>
+                <p className="dark:text-neutral-300">{cartProducts.length} товаров</p>
+              </div>
+              <div className="mt-10 flex flex-col gap-3">
+                {fetchedProducts.map((cartProduct, key) => {
+                  return (
+                    <ProductCartCard key={key} product={cartProduct.product} quantity={cartProduct.quantity} />
+                  )
+                })}
+              </div>
+              <div className="sticky bottom-0 left-0 w-full z-50 pt-7 flex align-self items-center justify-center">
+                <LinkBtn to="/catalog" className="w-full !rounded-full text-lg">
+                  Оформить заказ
+                </LinkBtn>
+              </div>
+            </>
+          ) : (
+            <p>Вы ничего не добавили в корзину</p>
+          )}
         </div>
       </div>
     </div>
