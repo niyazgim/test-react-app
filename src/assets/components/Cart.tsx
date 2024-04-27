@@ -20,6 +20,7 @@ export default function Cart() {
     setFetchedProducts(fetchedProducts => [...fetchedProducts, { product: productResponse.data, quantity: quantity }]);
   }
 
+  // ! duplicates the cart products
   useEffect(() => {
     if (localStorage.getItem('cart')) {
       const products: CartProductType[] = [];

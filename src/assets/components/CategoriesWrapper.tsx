@@ -1,4 +1,4 @@
-import { CategoryType, PropsType } from "../../types";
+import { CategoryType, ClildPropType } from "../../types";
 import { useSearchParams } from "react-router-dom";
 import useQueryParamsManager from "../hooks/useQueryParamsManager";
 
@@ -18,7 +18,7 @@ export function CategoryBtn({ value, label }: CategoryType): JSX.Element {
   );
 }
 
-export function CategoriesWrapper({ children }: PropsType): JSX.Element {
+export function CategoriesWrapper({ children }: ClildPropType): JSX.Element {
   return (
     <div className="flex items-center gap-3 justify-center">
       {children}
